@@ -131,8 +131,10 @@ class OverlayPlugin extends Plugin {
   }
 
   mapOverlays_(items) {
+    // Use merge function based on video.js version.
+    const merge = (videojs.obj && videojs.obj.merge) || videojs.mergeOptions;
     return items.map(o => {
-      const mergeOptions = videojs.mergeOptions(this.options, o);
+      const mergeOptions = merge(this.options, o);
       const attachToControlBar = typeof mergeOptions.attachToControlBar === 'string' || mergeOptions.attachToControlBar === true;
 
       if (!this.player.controls() || !this.player.controlBar) {
